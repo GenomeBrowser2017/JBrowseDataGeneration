@@ -1,4 +1,4 @@
-# DeNovoAssembly
+# JBrowse Data Generation
 
 This repository is meant to collaborate on JBrowse data generation. Following is a list of the files/data in this repository: (Please modify this file if you decide to change something.)
 
