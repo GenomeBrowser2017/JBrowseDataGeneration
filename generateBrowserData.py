@@ -24,11 +24,13 @@ def prepareReferenceSequence(dataDir, outDir, config):
 # Generates tracks for all the GFF files in the data directory.
 def generateTracks(dataDir, outDir, config):
     commonOptions = ['--trackType', 'CanvasFeatures', '--out', outDir]
-    for trackFile in glob.glob(path.join(dataDir, '*.gff')):
-        trackLabel = path.splitext(path.basename(trackFile))[0]
+    for trackFile in config['gffFiles']:
+        if not path.exists(path.join(dataDir, trackFile)):
+            continue
+        trackLabel = path.splitext(trackFile)[0]
         print 'Generating %s track...'%trackLabel
-        trackOptions = ['--gff', trackFile, '--trackLabel', trackLabel]
-        configOptions = list(sum((('--%s'%key, value) for key, value in config.get(path.basename(trackFile), {}).iteritems()), ()))
+        trackOptions = ['--gff', path.join(dataDir, trackFile), '--trackLabel', trackLabel]
+        configOptions = list(sum((('--%s'%key, value) for key, value in config[trackFile].iteritems()), ()))
         p = subprocess.Popen([flatfile_to_json] + trackOptions + commonOptions + configOptions, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
         out, err = p.communicate()
         sys.stdout.write(out)
