@@ -18,7 +18,9 @@ def prepareReferenceSequence(dataDir, outDir, config):
     p = subprocess.Popen([prepare_refseqs] + prepareOptions + configOptions, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     out, err = p.communicate()
     sys.stdout.write(out)
+    sys.stdout.flush()
     sys.stderr.write(err)
+    sys.stderr.flush()
     print 'Done.'
 
 # Generates tracks for all the GFF files in the data directory.
@@ -34,7 +36,9 @@ def generateTracks(dataDir, outDir, config):
         p = subprocess.Popen([flatfile_to_json] + trackOptions + commonOptions + configOptions, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
         out, err = p.communicate()
         sys.stdout.write(out)
+        sys.stdout.flush()
         sys.stderr.write(err)
+        sys.stderr.flush()
         print 'Done.'
 
 # Generates names for autocomplete functionality.
@@ -43,7 +47,9 @@ def generateNames(outDir):
     p = subprocess.Popen([generate_names, '--out', outDir], stdout = subprocess.PIPE, stderr = subprocess.PIPE)
     out, err = p.communicate()
     sys.stdout.write(out)
+    sys.stdout.flush()
     sys.stderr.write(err)
+    sys.stderr.flush()
     print 'Done.'
 
 # Generates data for loading into JBrowse from FASTA and GFF files.
